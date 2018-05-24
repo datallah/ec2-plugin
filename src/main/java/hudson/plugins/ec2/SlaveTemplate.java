@@ -675,10 +675,8 @@ public class SlaveTemplate implements Describable<SlaveTemplate> {
             }
 
             // Create a shadow of the AMI mapping (doesn't like reusing rootMapping directly)
-            BlockDeviceMapping newMapping = new BlockDeviceMapping().withDeviceName(rootMapping.getDeviceName());
-            EbsBlockDevice newEbs = new EbsBlockDevice();
-            newEbs.setDeleteOnTermination(Boolean.TRUE);
-            newMapping.setEbs(newEbs);
+            BlockDeviceMapping newMapping = rootMapping.clone();
+            newMapping.getEbs().setDeleteOnTermination(Boolean.TRUE);
             deviceMappings.add(0, newMapping);
         }
     }
